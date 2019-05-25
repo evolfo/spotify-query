@@ -82,7 +82,7 @@ class App extends Component {
 	  return (
 	  	<React.Fragment>
 	  	  <div style={style.container}>
-	  	  <a href='https://accounts.spotify.com/authorize?client_id=3b65d5b25ce043c6b3f1004e13b733e0&response_type=token&redirect_uri=http://localhost:3000&scope=user-read-private%20user-read-email'>
+	  	  <a href='https://accounts.spotify.com/authorize?client_id=3b65d5b25ce043c6b3f1004e13b733e0&response_type=token&redirect_uri=https://spotify-query.herokuapp.com/&scope=user-read-private%20user-read-email'>
 	  	  	Authenticate
 	  	  </a>
 		    <h1>Query Spotify</h1>
