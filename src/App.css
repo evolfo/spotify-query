@@ -31,3 +31,16 @@
     transform: rotate(360deg);
   }
 }
+
+ul {
+  color: #1DB954;
+  list-style-type: none;
+  background: black;
+  border: 5px solid #1DB954;
+  padding: 2rem;
+  padding-top: .8rem;
+}
+
+a {
+  color: #bfe2cb;
+}
