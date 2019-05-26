@@ -62,7 +62,7 @@ class App extends Component {
   	  	<ul>
   	  	  <li><h3>Playlist Name: {playlist.name}</h3></li>
   	  	  <li><h4>Followers: {playlist.followers.total}</h4></li>
-  	  	  <li><a href={playlist.href}>Link to Playlist</a></li>
+  	  	  <li><a href={playlist.external_urls.spotify}>Link to Playlist</a></li>
   	  	  <li>User: {playlist.owner.display_name}</li>
   	    </ul>
   	  )
