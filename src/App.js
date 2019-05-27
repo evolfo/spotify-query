@@ -19,6 +19,11 @@ class App extends Component {
 
   handleSubmit = (e) => {
   	e.preventDefault()
+
+  	this.setState({
+  	  playlistIds: []
+  	})
+
   	fetch(`https://api.spotify.com/v1/search?q=${this.state.searchTerm}&type=playlist&limit=50`, {
   	  method: 'GET',
   	  headers: {
@@ -33,9 +38,15 @@ class App extends Component {
   	  	  })
   	  	})
   	  })
+  	  .then(this.getPlaylists())
   }
 
   getPlaylists = () => {
+  	console.log('hi')
+  	this.setState({
+  	  playlists: []
+  	})
+
   	if (this.state.playlistIds.length > 49) {
   	  this.state.playlistIds.map(playlistId => {
   	    fetch(`https://api.spotify.com/v1/playlists/` + playlistId, {
@@ -59,7 +70,7 @@ class App extends Component {
   generatePlaylists = () => {
   	return this.state.playlists.map(playlist => {
   	  return (
-  	  	<ul>
+  	  	<ul key={playlist.id}>
   	  	  <li><h3>Playlist Name: {playlist.name}</h3></li>
   	  	  <li><h4>Followers: {playlist.followers.total}</h4></li>
   	  	  <li><a target="_blank" href={playlist.external_urls.spotify}>Link to Playlist</a></li>
@@ -78,6 +89,8 @@ class App extends Component {
   	}
 
   	console.log(this.state.playlists)
+  	// https://spotify-query.herokuapp.com/
+  	// http://localhost:3000
 
 	  return (
 	  	<React.Fragment>
