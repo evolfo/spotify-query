@@ -112,10 +112,11 @@ class App extends Component {
 	  return (
 	  	<React.Fragment>
 	  	  <div style={style.container}>
-	  	  <a href={`https://accounts.spotify.com/authorize?client_id=${process.env.CLIENT_ID}&response_type=token&redirect_uri=https://spotify-query.herokuapp.com/&scope=user-read-private%20user-read-email`}>
+	  	  <a href={`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&redirect_uri=https://spotify-query.herokuapp.com/&scope=user-read-private%20user-read-email`}>
 	  	  	Authenticate
 	  	  </a>
-		    <h1>Query Spotify</h1>
+		    <h1>Spotify Playlist Search</h1>
+		    <p>This site searches the Spotify playlist database based on the search term(s). It will return all the playlists that match that have over 1,000 followers (50 items max).</p>
 		    <form onSubmit={this.handleSubmit}>
 		      <input name="searchTerm" type="text" onChange={this.handleChange} value={this.state.searchTerm}/>
 		      <input type="submit" value="Submitz" />
