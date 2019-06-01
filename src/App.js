@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { CSVLink } from "react-csv";
+
 class App extends Component {
 
   state = {
@@ -42,6 +44,7 @@ class App extends Component {
   }
 
   getPlaylists = () => {
+  	console.log('hi')
   	this.setState({
   	  playlists: []
   	})
@@ -84,13 +87,27 @@ class App extends Component {
   	  container: {
   	  	padding: '5rem',
   	  	border: '10px solid black'
+  	  },
+  	  csvLink: {
+  	  	marginTop: '1rem',
+  	  	display: 'block',
+  	  	textDecoration: 'none',
+  	  	padding: '.5rem',
+  	  	width: '7rem',
+  	  	background: 'rgba(29, 185, 84, 0.45)'
   	  }
   	}
 
   	console.log(this.state.playlists)
   	// https://spotify-query.herokuapp.com/
   	// http://localhost:3000
-  	// ${ENV['CLIENT_ID']}
+  	// ${process.env.CLIENT_ID}
+
+  	const csvData = [['Name', 'Playlist Link', 'Follower Count']]
+
+	this.state.playlists.map(playlist => {
+      csvData.push([playlist.name, playlist.external_urls.spotify, playlist.followers.total])
+	}) 
 
 	  return (
 	  	<React.Fragment>
@@ -103,6 +120,7 @@ class App extends Component {
 		      <input name="searchTerm" type="text" onChange={this.handleChange} value={this.state.searchTerm}/>
 		      <input type="submit" value="Submitz" />
 		    </form>
+		    { this.state.playlists.length > 0 ? <CSVLink style={style.csvLink} data={csvData}>Download CSV</CSVLink> : null }
 		    {this.generatePlaylists()}
 		  </div>
 		</React.Fragment>
