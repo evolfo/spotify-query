@@ -119,14 +119,14 @@ class App extends Component {
 
   	const csvData = [['Name', 'Playlist Link', 'Follower Count']]
 
-	this.state.playlists.map(playlist => {
+	this.state.checkedPlaylists.map(playlist => {
       csvData.push([playlist.name, playlist.external_urls.spotify, playlist.followers.total])
 	}) 
 
 	  return (
 	  	<React.Fragment>
 	  	  <div style={style.container}>
-	  	  <a href={`https://accounts.spotify.com/authorize?client_id=3b65d5b25ce043c6b3f1004e13b733e0&response_type=token&redirect_uri=http://localhost:3000&scope=user-read-private%20user-read-email`}>
+	  	  <a href={`https://accounts.spotify.com/authorize?client_id=${process.env.CLIENT_ID}&response_type=token&redirect_uri=https://spotify-query.herokuapp.com/&scope=user-read-private%20user-read-email`}>
 	  	  	Authenticate
 	  	  </a>
 		    <h1>Spotify Playlist Search</h1>
