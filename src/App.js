@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Check from './Check';
 
 import { CSVLink } from "react-csv";
 
@@ -10,7 +11,8 @@ class App extends Component {
     searchTerm: '',
     accessToken: window.location.hash.substring(14, 177),
     playlistIds: [],
-    playlists: []
+    playlists: [],
+    checkedPlaylists: []
   }
 
   handleChange = (e) => {
@@ -44,7 +46,6 @@ class App extends Component {
   }
 
   getPlaylists = () => {
-  	console.log('hi')
   	this.setState({
   	  playlists: []
   	})
@@ -73,6 +74,7 @@ class App extends Component {
   	return this.state.playlists.map(playlist => {
   	  return (
   	  	<ul key={playlist.id}>
+  	  	  <Check onChange={(e) => this.handleCheckClick(e, playlist)} />
   	  	  <li><h3>Playlist Name: {playlist.name}</h3></li>
   	  	  <li><h4>Followers: {playlist.followers.total}</h4></li>
   	  	  <li><a target="_blank" href={playlist.external_urls.spotify}>Link to Playlist</a></li>
@@ -80,6 +82,18 @@ class App extends Component {
   	    </ul>
   	  )
   	})
+  }
+
+  handleCheckClick = (e, playlist) => {
+  	if(e.target.checked) {
+      this.setState({
+        checkedPlaylists: [...this.state.checkedPlaylists, playlist]
+      })
+    } else {
+      this.setState({
+      	checkedPlaylists: this.state.checkedPlaylists.filter(plist => plist.id !== playlist.id)
+      })
+    }
   }
 
   render (){
@@ -98,7 +112,7 @@ class App extends Component {
   	  }
   	}
 
-  	console.log(this.state.playlists)
+  	console.log(this.state.checkedPlaylists)
   	// https://spotify-query.herokuapp.com/
   	// http://localhost:3000
   	// ${process.env.CLIENT_ID}
@@ -112,7 +126,7 @@ class App extends Component {
 	  return (
 	  	<React.Fragment>
 	  	  <div style={style.container}>
-	  	  <a href={`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&redirect_uri=https://spotify-query.herokuapp.com/&scope=user-read-private%20user-read-email`}>
+	  	  <a href={`https://accounts.spotify.com/authorize?client_id=3b65d5b25ce043c6b3f1004e13b733e0&response_type=token&redirect_uri=http://localhost:3000&scope=user-read-private%20user-read-email`}>
 	  	  	Authenticate
 	  	  </a>
 		    <h1>Spotify Playlist Search</h1>

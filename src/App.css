@@ -44,3 +44,7 @@ ul {
 a {
   color: #bfe2cb;
 }
+
+.mdc-checkbox__background {
+  display: none;
+}
