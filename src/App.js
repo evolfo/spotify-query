@@ -9,6 +9,7 @@ class App extends Component {
 
   state = {
     searchTerm: '',
+    followerAmount: 1000,
     accessToken: window.location.hash.substring(14, 177),
     playlistIds: [],
     playlists: [],
@@ -17,7 +18,7 @@ class App extends Component {
 
   handleChange = (e) => {
   	this.setState({
-  	  searchTerm: e.target.value,
+  	  [e.target.name]: e.target.value,
   	})
   }
 
@@ -67,7 +68,7 @@ class App extends Component {
   	    })
   	      .then(res => res.json())
   	      .then(playlist => {
-  	      	if(playlist.followers && playlist.followers.total > 999) {
+  	      	if(playlist.followers && playlist.followers.total > this.state.followerAmount) {
   	      	  this.setState({
   	      	  	playlists: [...this.state.playlists, playlist]
   	      	  })
@@ -118,12 +119,15 @@ class App extends Component {
   	  	width: '12.5rem',
   	  	textAlign: 'center',
   	  	background: 'rgba(29, 185, 84, 0.45)'
+  	  },
+  	  input: {
+  	  	minWidth: '11rem'
   	  }
   	}
 
   	// https://spotify-query.herokuapp.com/
   	// http://localhost:3000
-  	// ${process.env.REACT_APP_CLIENT_ID}
+  	// ${process.env.CLIENT_ID}
 
   	const csvData = [['Name', 'Playlist Link', 'Follower Count']]
   	const csvSelectedData = [['Name', 'Playlist Link', 'Follower Count']]
@@ -139,13 +143,14 @@ class App extends Component {
 	  return (
 	  	<React.Fragment>
 	  	  <div style={style.container}>
-	  	  <a href={`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&redirect_uri=https://spotify-query.herokuapp.com/&scope=user-read-private%20user-read-email`}>
+	  	  <a href={`https://accounts.spotify.com/authorize?client_id=${process.env.CLIENT_ID}&response_type=token&redirect_uri=https://spotify-query.herokuapp.com/&scope=user-read-private%20user-read-email`}>
 	  	  	Authenticate
 	  	  </a>
 		    <h1>Spotify Playlist Search</h1>
 		    <p>This site searches the Spotify playlist database based on the search term(s). It will return all the playlists that match that have over 1,000 followers (50 items max).</p>
 		    <form onSubmit={this.handleSubmit}>
-		      <input name="searchTerm" type="text" onChange={this.handleChange} value={this.state.searchTerm}/>
+		      <p><input style={style.input} name="followerAmount" type="text" onChange={this.handleChange} value={this.state.followerAmount}/> Minimum amount of followers for playlist</p>
+		      <p><input style={style.input} placeholder="Type your search term here" name="searchTerm" type="text" onChange={this.handleChange} value={this.state.searchTerm}/><br /></p>
 		      <input type="submit" value="Submitz" />
 		    </form>
 		    { this.state.playlists.length > 0 ? 
