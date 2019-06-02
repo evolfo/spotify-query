@@ -127,7 +127,7 @@ class App extends Component {
 
   	// https://spotify-query.herokuapp.com/
   	// http://localhost:3000
-  	// ${process.env.CLIENT_ID}
+  	// ${process.env.REACT_APP_CLIENT_ID}
 
   	const csvData = [['Name', 'Playlist Link', 'Follower Count']]
   	const csvSelectedData = [['Name', 'Playlist Link', 'Follower Count']]
@@ -143,7 +143,7 @@ class App extends Component {
 	  return (
 	  	<React.Fragment>
 	  	  <div style={style.container}>
-	  	  <a href={`https://accounts.spotify.com/authorize?client_id=${process.env.CLIENT_ID}&response_type=token&redirect_uri=https://spotify-query.herokuapp.com/&scope=user-read-private%20user-read-email`}>
+	  	  <a href={`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=token&redirect_uri=https://spotify-query.herokuapp.com/&scope=user-read-private%20user-read-email`}>
 	  	  	Authenticate
 	  	  </a>
 		    <h1>Spotify Playlist Search</h1>
