@@ -7,7 +7,9 @@ class Check extends Component {
     indeterminate: false
   }
     
-  render(){
+  render(){ 
+    console.log(this.state)
+
     return (
       <div className="form-check">
         <Checkbox

@@ -21,8 +21,15 @@ class App extends Component {
   	})
   }
 
+  // checked={this.state.allChecked || playlist.checked} onChange={() => this._handleCheckboxChang(playlist)}
+
   handleSubmit = (e) => {
   	e.preventDefault()
+
+  	if (this.state.searchTerm.length === 0) {
+  	  alert('Please type a longer search term')
+  	  return
+  	}
 
   	this.setState({
   	  playlistIds: []
@@ -74,7 +81,7 @@ class App extends Component {
   	return this.state.playlists.map(playlist => {
   	  return (
   	  	<ul key={playlist.id}>
-  	  	  <Check onChange={(e) => this.handleCheckClick(e, playlist)} />
+  	  	  <Check onClick={(e) => this.handleCheckClick(e, playlist)} />
   	  	  <li><h3>Playlist Name: {playlist.name}</h3></li>
   	  	  <li><h4>Followers: {playlist.followers.total}</h4></li>
   	  	  <li><a target="_blank" href={playlist.external_urls.spotify}>Link to Playlist</a></li>
@@ -104,23 +111,29 @@ class App extends Component {
   	  },
   	  csvLink: {
   	  	marginTop: '1rem',
-  	  	display: 'block',
+  	  	marginRight: '.5rem',
+  	  	display: 'inline-block',
   	  	textDecoration: 'none',
   	  	padding: '.5rem',
-  	  	width: '7rem',
+  	  	width: '12.5rem',
+  	  	textAlign: 'center',
   	  	background: 'rgba(29, 185, 84, 0.45)'
   	  }
   	}
 
-  	console.log(this.state.checkedPlaylists)
   	// https://spotify-query.herokuapp.com/
   	// http://localhost:3000
   	// ${process.env.CLIENT_ID}
 
   	const csvData = [['Name', 'Playlist Link', 'Follower Count']]
+  	const csvSelectedData = [['Name', 'Playlist Link', 'Follower Count']]
+
+  	this.state.playlists.map(playlist => {
+      csvData.push([playlist.name, playlist.external_urls.spotify, playlist.followers.total])
+	}) 
 
 	this.state.checkedPlaylists.map(playlist => {
-      csvData.push([playlist.name, playlist.external_urls.spotify, playlist.followers.total])
+      csvSelectedData.push([playlist.name, playlist.external_urls.spotify, playlist.followers.total])
 	}) 
 
 	  return (
@@ -135,8 +148,13 @@ class App extends Component {
 		      <input name="searchTerm" type="text" onChange={this.handleChange} value={this.state.searchTerm}/>
 		      <input type="submit" value="Submitz" />
 		    </form>
-		    { this.state.playlists.length > 0 ? <CSVLink style={style.csvLink} data={csvData}>Download CSV</CSVLink> : null }
-		    {this.generatePlaylists()}
+		    { this.state.playlists.length > 0 ? 
+		    	<React.Fragment>
+		    	  <CSVLink style={style.csvLink} data={csvSelectedData}>Download Selected as CSV</CSVLink>
+		    	  <CSVLink style={style.csvLink} data={csvData}>Download All as CSV</CSVLink>
+		     	</React.Fragment>
+		     	: null }
+		    { this.state.playlistIds.length > 0 ? this.generatePlaylists() : null }
 		  </div>
 		</React.Fragment>
 	  );
