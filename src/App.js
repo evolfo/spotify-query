@@ -147,7 +147,7 @@ class App extends Component {
 	  	  	Authenticate
 	  	  </a>
 		    <h1>Spotify Playlist Search</h1>
-		    <p>This site searches the Spotify playlist database based on the search term(s). It will return all the playlists that match that have over 1,000 followers (50 items max).</p>
+		    <p>This site searches the Spotify playlist database based on the search term(s). It will return all the playlists that match that have over 1,000 followers (50 items max). Be sure to authenticate first!</p>
 		    <form onSubmit={this.handleSubmit}>
 		      <p><input style={style.input} name="followerAmount" type="text" onChange={this.handleChange} value={this.state.followerAmount}/> Minimum amount of followers for playlist</p>
 		      <p><input style={style.input} placeholder="Type your search term here" name="searchTerm" type="text" onChange={this.handleChange} value={this.state.searchTerm}/><br /></p>
