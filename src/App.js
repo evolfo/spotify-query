@@ -125,8 +125,8 @@ class App extends Component {
   	  }
   	}
 
-  	// https://spotify-query.herokuapp.com/
-  	// http://localhost:3000
+  	// Production: https://spotify-query.herokuapp.com/
+  	// Local: http://localhost:3000
   	// ${process.env.REACT_APP_CLIENT_ID}
 
   	const csvData = [['Name', 'Playlist Link', 'Follower Count']]
